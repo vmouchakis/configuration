@@ -1,7 +1,9 @@
-# add color in `ls` command
-export CLICOLOR=1
-export LSCOLORS=ExFxCxDxBxegedabagaced
-alias ls='ls --color=auto'
+# git branch info
+function parse_git_branch() {
+    git branch 2> /dev/null | sed -n -e 's/^\* \(.*\)/(\1)/p'
+}
 
-# zsh prompt (needs to be better)
-PS1="%n@%m %1~ %# "
+setopt PROMPT_SUBST
+
+# use single quotes '' in order the parse_git_branch function to be called
+PS1='%n@%m %1~ $(parse_git_branch) %# '
